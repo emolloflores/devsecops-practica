@@ -42,17 +42,30 @@ jobs:
       run: docker compose build
 
     # 5. Seguridad – Escaneo de imágenes (Trivy)
-    - name: Scan Docker images (Trivy)
+    # Seguridad – Trivy users-service
+    - name: Trivy scan users-service
       uses: aquasecurity/trivy-action@0.20.0
       with:
-        image-ref: |
-          users-service:latest
-          academic-service:latest
-          api-gateway:latest
+        image-ref: users-service:latest
+        severity: CRITICAL,HIGH
+        exit-code: 1
+    # Seguridad – Trivy academic-service
+    - name: Trivy scan academic-service
+      uses: aquasecurity/trivy-action@0.20.0
+      with:
+       image-ref: academic-service:latest
+       severity: CRITICAL,HIGH
+       exit-code: 1
+
+# Seguridad – Trivy api-gateway
+    - name: Trivy scan api-gateway
+      uses: aquasecurity/trivy-action@0.20.0
+      with:
+        image-ref: api-gateway:latest
         severity: CRITICAL,HIGH
         exit-code: 1
 
-    # 6. CD – Levantar sistema (solo si todo pasó)
+# 6. CD – Levantar sistema (solo si todo pasó)
     - name: Deploy with Docker Compose
       if: success()
       run: docker compose up -d
