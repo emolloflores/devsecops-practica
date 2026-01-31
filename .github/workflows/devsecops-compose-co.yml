@@ -41,7 +41,9 @@ jobs:
     - name: SAST users-service
       run: |
         cd users-service
+        npm install --save-dev semgrep  # <-- Agrega esta línea
         npx semgrep --config=auto --severity=ERROR
+        # npx semgrep --config=auto --severity=ERROR
 
     - name: SAST academic-service
       run: |
