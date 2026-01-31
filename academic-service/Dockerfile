@@ -1,6 +1,6 @@
 # Imagen base mínima y oficial
 #FROM node:18-alpine
-FROM node:18.20-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
